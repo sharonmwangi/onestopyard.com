@@ -1,0 +1,1583 @@
+[index(3)(1).html](https://github.com/user-attachments/files/27079663/index.3.1.html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>One Stop Yard — Quality Second-Hand Cars</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --black: #0a0a0a;
+    --off-black: #111111;
+    --charcoal: #1c1c1c;
+    --mid: #555;
+    --muted: #888;
+    --border: #e2e2e2;
+    --light-bg: #f7f6f4;
+    --white: #ffffff;
+    --accent: #c8a96e;
+    --accent-dark: #a88540;
+    --danger: #c0392b;
+    --success: #27ae60;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .serif { font-family: 'Cormorant Garamond', serif; }
+
+  /* ───── UTILITY ───── */
+  .hidden { display: none !important; }
+  .page { display: none; }
+  .page.active { display: block; }
+  input, textarea, select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+  }
+
+  /* ═══════════════════════════════════════
+     PUBLIC SITE
+  ═══════════════════════════════════════ */
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    height: 64px;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.06); }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--black);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--mid);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--black);
+    transition: all .3s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 5vw;
+    z-index: 99;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none;
+    color: var(--black);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 5vw 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--off-black);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1510 50%, #0a0a0a 100%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    animation: fadeUp .9s ease both;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 7vw, 88px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    color: rgba(255,255,255,0.55);
+    font-size: 16px;
+    max-width: 460px;
+    margin: 0 auto 44px;
+    line-height: 1.7;
+  }
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--accent);
+    color: var(--black);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .btn-outline {
+    display: inline-block;
+    padding: 13px 35px;
+    background: transparent;
+    color: var(--white);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+    margin-left: 16px;
+  }
+  .btn-outline:hover { border-color: var(--white); color: var(--white); }
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.3);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* LISTINGS SECTION */
+  #listings {
+    padding: 100px 5vw;
+    background: var(--white);
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--black);
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    color: var(--muted);
+    max-width: 400px;
+    margin: 0 auto;
+    font-size: 14px;
+  }
+
+  /* CAR GRID */
+  #carGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .carCard {
+    background: var(--white);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform .25s, box-shadow .25s;
+    cursor: pointer;
+    position: relative;
+  }
+  .carCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+    z-index: 1;
+  }
+  .carCard-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    background: var(--light-bg);
+  }
+  .carCard-img-placeholder {
+    width: 100%;
+    height: 200px;
+    background: var(--light-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+  }
+  .carCard-body { padding: 20px; }
+  .carCard-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    background: rgba(200,169,110,0.1);
+    padding: 4px 10px;
+    margin-bottom: 10px;
+  }
+  .carCard-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--black);
+    line-height: 1.2;
+  }
+  .carCard-meta {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+  .carCard-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--black);
+    margin-bottom: 4px;
+  }
+  .carCard-condition {
+    font-size: 12px;
+    color: var(--success);
+    letter-spacing: 0.04em;
+  }
+  .carCard-enquire {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 16px;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .carCard-enquire:hover { background: var(--charcoal); }
+
+  .no-cars {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--muted);
+  }
+  .no-cars-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: .4;
+  }
+
+  /* TRUST SECTION */
+  #trust {
+    background: var(--off-black);
+    padding: 100px 5vw;
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 48px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .trustCard {
+    text-align: center;
+    animation: fadeUp .6s ease both;
+  }
+  .trust-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(200,169,110,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--accent);
+    font-size: 20px;
+  }
+  .trust-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+  .trust-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.7;
+  }
+  #trust .section-title { color: var(--white); }
+  #trust .section-sub { color: rgba(255,255,255,0.35); }
+
+  /* CONTACT SECTION */
+  #contact {
+    padding: 100px 5vw;
+    background: var(--light-bg);
+  }
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 960px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .contact-info-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .contact-info-text {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+  .contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--mid);
+  }
+  .contact-detail-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+    padding: 14px 28px;
+    background: #25D366;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: background .2s;
+  }
+  .wa-btn:hover { background: #1da855; }
+
+  /* FORM */
+  .contactForm {
+    background: var(--white);
+    padding: 40px;
+    border: 1px solid var(--border);
+  }
+  .form-row {
+    margin-bottom: 20px;
+  }
+  .form-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--black);
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .form-submit:hover { background: var(--charcoal); }
+  .form-success {
+    text-align: center;
+    padding: 20px;
+    color: var(--success);
+    font-size: 14px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--off-black);
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    padding: 32px 5vw;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  footer strong { color: var(--accent); font-weight: 400; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white);
+    max-width: 500px;
+    width: 100%;
+    padding: 40px;
+    position: relative;
+    animation: fadeUp .3s ease;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .modal-close:hover { color: var(--black); }
+  .modal-car-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .modal-car-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--accent-dark);
+    margin-bottom: 24px;
+  }
+  .modal-car-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    margin-bottom: 24px;
+  }
+  .modal-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .modal-info-row span:first-child { color: var(--muted); }
+  .modal-info-row span:last-child { font-weight: 500; }
+
+
+  /* ═══════════════════════════════════════
+     ADMIN LOGIN PAGE
+  ═══════════════════════════════════════ */
+  #adminLoginPage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--off-black);
+    padding: 20px;
+  }
+  .login-box {
+    width: 100%;
+    max-width: 400px;
+    animation: fadeUp .5s ease;
+  }
+  .login-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+  .login-logo span { color: var(--accent); }
+  .login-eyebrow {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 44px;
+  }
+  .login-card {
+    background: var(--white);
+    padding: 40px;
+    border-top: 3px solid var(--accent);
+  }
+  .login-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 28px;
+    color: var(--black);
+  }
+  .login-error {
+    background: rgba(192,57,43,0.08);
+    border-left: 3px solid var(--danger);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--danger);
+    margin-bottom: 20px;
+  }
+  .login-back {
+    display: block;
+    text-align: center;
+    margin-top: 24px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .login-back:hover { color: rgba(255,255,255,0.6); }
+
+  /* ═══════════════════════════════════════
+     ADMIN DASHBOARD PAGE
+  ═══════════════════════════════════════ */
+  #adminDashPage {
+    min-height: 100vh;
+    background: var(--light-bg);
+    display: flex;
+    flex-direction: column;
+  }
+  .admin-nav {
+    background: var(--off-black);
+    padding: 0 5vw;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .admin-nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--white);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+  .admin-nav-logo span { color: var(--accent); }
+  .admin-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .admin-badge {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(200,169,110,0.1);
+    padding: 4px 10px;
+    border: 1px solid rgba(200,169,110,0.2);
+  }
+  .admin-logout {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: color .2s;
+  }
+  .admin-logout:hover { color: rgba(255,255,255,0.8); }
+
+  .admin-body {
+    flex: 1;
+    padding: 40px 5vw;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .admin-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .admin-header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .admin-header-sub {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .admin-stat-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .admin-stat {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 20px 28px;
+    flex: 1;
+    min-width: 140px;
+  }
+  .admin-stat-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .admin-stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--black);
+    line-height: 1;
+  }
+  .admin-stat-value.accent { color: var(--accent-dark); }
+
+  /* UPLOAD FORM */
+  .upload-panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 40px;
+    margin-bottom: 40px;
+  }
+  .upload-panel-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .upload-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .upload-full { grid-column: 1 / -1; }
+  .img-upload-area {
+    border: 1px dashed var(--border);
+    padding: 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    position: relative;
+  }
+  .img-upload-area:hover { border-color: var(--accent); background: rgba(200,169,110,0.03); }
+  .img-upload-area input[type=file] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .img-upload-icon { font-size: 28px; color: var(--accent); margin-bottom: 8px; }
+  .img-upload-text { font-size: 13px; color: var(--muted); }
+  .img-preview-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .img-preview {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+  .limit-warn {
+    font-size: 12px;
+    color: var(--accent-dark);
+    margin-top: 8px;
+    display: none;
+  }
+  .upload-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    align-items: center;
+  }
+  .btn-cancel {
+    padding: 13px 28px;
+    background: transparent;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--mid);
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color .2s;
+  }
+  .btn-cancel:hover { border-color: var(--black); color: var(--black); }
+  .upload-msg { font-size: 13px; }
+  .upload-msg.success { color: var(--success); }
+  .upload-msg.error { color: var(--danger); }
+
+  /* CAR MANAGEMENT TABLE */
+  .manage-panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 32px 40px;
+  }
+  .manage-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .manage-panel-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+  }
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .admin-table th {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+  }
+  .admin-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--mid);
+    vertical-align: middle;
+  }
+  .admin-table tr:last-child td { border-bottom: none; }
+  .admin-table tr:hover td { background: var(--light-bg); }
+  .table-thumb {
+    width: 56px;
+    height: 40px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+  .table-thumb-placeholder {
+    width: 56px;
+    height: 40px;
+    background: var(--light-bg);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .td-name { font-weight: 500; color: var(--black); }
+  .td-price { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--black); }
+  .btn-delete {
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px solid rgba(192,57,43,0.3);
+    color: var(--danger);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background .2s, border-color .2s;
+  }
+  .btn-delete:hover { background: rgba(192,57,43,0.06); border-color: var(--danger); }
+  .empty-table {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* ───── ANIMATIONS ───── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  /* ───── RESPONSIVE ───── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+    .upload-grid { grid-template-columns: 1fr; }
+    .upload-full { grid-column: 1; }
+    .admin-table th:nth-child(3),
+    .admin-table td:nth-child(3),
+    .admin-table th:nth-child(4),
+    .admin-table td:nth-child(4) { display: none; }
+    .manage-panel { padding: 24px 20px; }
+    .upload-panel { padding: 28px 20px; }
+    .contactForm { padding: 28px 20px; }
+    .btn-outline { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     PUBLIC SITE PAGE
+═══════════════════════════════════════ -->
+<div id="publicPage" class="page active">
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="#" class="nav-logo">One Stop <span>Yard</span></a>
+    <ul class="nav-links">
+      <li><a href="#listings">Listings</a></li>
+      <li><a href="#trust">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#listings" onclick="closeMobileMenu()">Listings</a>
+    <a href="#trust" onclick="closeMobileMenu()">About</a>
+    <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">One Stop Yard · Nyahururu, Laikipia County</p>
+      <h1 class="hero-title">Your Next Car<br>Starts <em>Here</em></h1>
+      <p class="hero-sub">Hand-selected, fully inspected second-hand vehicles. Fair prices. Honest service. No fuss.</p>
+      <a href="#listings" class="btn-primary">Browse Cars</a>
+      <a href="#contact" class="btn-outline">Enquire</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- LISTINGS -->
+  <section id="listings">
+    <div class="section-header">
+      <p class="section-eyebrow">Available Now</p>
+      <h2 class="section-title serif">Our Current Listings</h2>
+      <p class="section-sub">Each vehicle personally inspected and ready to drive away today.</p>
+    </div>
+    <div id="carGrid">
+      <div class="no-cars">
+        <div class="no-cars-icon">🚗</div>
+        <p>No listings yet — check back soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section id="trust">
+    <div class="section-header">
+      <p class="section-eyebrow" style="color: var(--accent)">Why Choose Us</p>
+      <h2 class="section-title serif" style="color:var(--white)">The One Stop Difference</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,0.35)">We do things the right way so you drive away confident.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trustCard">
+        <div class="trust-icon">✓</div>
+        <h3 class="trust-title">Fully Inspected</h3>
+        <p class="trust-text">Every car goes through a comprehensive 50-point mechanical and body check before listing.</p>
+      </div>
+      <div class="trustCard" style="animation-delay:.1s">
+        <div class="trust-icon">📄</div>
+        <h3 class="trust-title">Clear Paperwork</h3>
+        <p class="trust-text">Logbooks, transfer documents, and ownership papers handled smoothly from start to finish.</p>
+      </div>
+      <div class="trustCard" style="animation-delay:.2s">
+        <div class="trust-icon">💬</div>
+        <h3 class="trust-title">Honest Pricing</h3>
+        <p class="trust-text">What you see is what you pay. No hidden fees, no last-minute surprises at the end.</p>
+      </div>
+      <div class="trustCard" style="animation-delay:.3s">
+        <div class="trust-icon">🤝</div>
+        <h3 class="trust-title">After-Sale Support</h3>
+        <p class="trust-text">Our relationship doesn't end at the sale. We're always reachable when you need us.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-wrap">
+      <div>
+        <p class="section-eyebrow">Get In Touch</p>
+        <h2 class="contact-info-title serif">Interested in a Car?<br>Let's Talk.</h2>
+        <p class="contact-info-text">Send us a message about any listing or general enquiry. We'll respond within 24 hours — usually much sooner. You can also reach us directly by phone or email.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <span>Nyahururu, Laikipia County, Kenya</span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🕐</div>
+          <span>Mon–Sat, 8am–6pm</span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📞</div>
+          <span>0791 519 461</span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">✉</div>
+          <span>onestopyard26@gmail.com</span>
+        </div>
+        <a href="https://wa.me/254791519461" class="wa-btn" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat on WhatsApp
+        </a>
+      </div>
+
+      <div class="contactForm">
+        <div id="contactFormContent">
+          <div class="form-row">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" id="cName" placeholder="Your name" />
+          </div>
+          <div class="form-row">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" id="cPhone" placeholder="+254 7XX XXX XXX" />
+          </div>
+          <div class="form-row">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" id="cEmail" placeholder="you@email.com" />
+          </div>
+          <div class="form-row">
+            <label class="form-label">Car of Interest</label>
+            <select class="form-input" id="cCar">
+              <option value="">— Select a car —</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Your Message</label>
+            <textarea class="form-input form-textarea" id="cMsg" placeholder="Questions, viewing request, etc."></textarea>
+          </div>
+          <button class="form-submit" onclick="submitContactForm()">Send Enquiry</button>
+        </div>
+        <div id="contactSuccess" class="form-success hidden">
+          ✓ &nbsp; Thank you! We'll be in touch within 24 hours.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <strong>One Stop Yard</strong> · All rights reserved · Nyahururu, Laikipia County</p>
+  </footer>
+
+</div><!-- /publicPage -->
+
+
+<!-- ═══════════════════════════════════════
+     ADMIN LOGIN PAGE
+═══════════════════════════════════════ -->
+<div id="adminLoginPage" class="page">
+  <div class="login-box">
+    <div class="login-logo">One Stop <span>Yard</span></div>
+    <div class="login-eyebrow">Admin Portal</div>
+    <div class="login-card">
+      <h2 class="login-title">Sign In</h2>
+      <div id="loginError" class="login-error hidden">Incorrect username or password.</div>
+      <div class="form-row">
+        <label class="form-label">Username</label>
+        <input type="text" class="form-input" id="adminUser" placeholder="admin" autocomplete="username" />
+      </div>
+      <div class="form-row">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" id="adminPass" placeholder="••••••••" autocomplete="current-password"
+          onkeydown="if(event.key==='Enter') doLogin()" />
+      </div>
+      <button class="form-submit" onclick="doLogin()">Sign In</button>
+    </div>
+    <span class="login-back" onclick="showPublic()">← Back to website</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     ADMIN DASHBOARD PAGE
+═══════════════════════════════════════ -->
+<div id="adminDashPage" class="page">
+  <nav class="admin-nav">
+    <div class="admin-nav-logo">One Stop <span>Yard</span></div>
+    <div class="admin-nav-right">
+      <span class="admin-badge">Admin</span>
+      <button class="admin-logout" onclick="doLogout()">Sign Out</button>
+    </div>
+  </nav>
+  <div class="admin-body">
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-header-title">Dashboard</h1>
+        <p class="admin-header-sub">Manage your car listings</p>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="admin-stat-row">
+      <div class="admin-stat">
+        <div class="admin-stat-label">Total Listings</div>
+        <div class="admin-stat-value" id="statTotal">0</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-label">Listings Limit</div>
+        <div class="admin-stat-value accent" id="statSlots">∞</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-label">Photos Per Car</div>
+        <div class="admin-stat-value">1–10</div>
+      </div>
+    </div>
+
+    <!-- UPLOAD PANEL -->
+    <div class="upload-panel">
+      <h2 class="upload-panel-title">Add New Car Listing</h2>
+      <div id="uploadLimitMsg" class="upload-msg error hidden" style="margin-bottom:16px">
+        ✕ &nbsp;Maximum of 8 cars reached. Delete a listing to add a new one.
+      </div>
+      <div id="uploadFormWrap">
+        <div class="upload-grid">
+          <div>
+            <label class="form-label">Make &amp; Model</label>
+            <input type="text" class="form-input" id="upModel" placeholder="e.g. Toyota Vitz" />
+          </div>
+          <div>
+            <label class="form-label">Year</label>
+            <input type="text" inputmode="numeric" class="form-input" id="upYear" placeholder="e.g. 2018" />
+          </div>
+          <div>
+            <label class="form-label">Price (KSh)</label>
+            <input type="text" inputmode="numeric" class="form-input" id="upPrice" placeholder="e.g. 850000" />
+          </div>
+          <div>
+            <label class="form-label">Mileage (km)</label>
+            <input type="text" inputmode="numeric" class="form-input" id="upMileage" placeholder="e.g. 62000" />
+          </div>
+          <div>
+            <label class="form-label">Transmission</label>
+            <select class="form-input" id="upTrans">
+              <option value="Automatic">Automatic</option>
+              <option value="Manual">Manual</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Fuel Type</label>
+            <select class="form-input" id="upFuel">
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="Electric">Electric</option>
+            </select>
+          </div>
+          <div class="upload-full">
+            <label class="form-label">Condition Note</label>
+            <input type="text" class="form-input" id="upCondition" placeholder="e.g. Excellent condition, accident-free, new tyres" />
+          </div>
+          <div class="upload-full">
+            <label class="form-label">Car Photos</label>
+            <div class="img-upload-area">
+              <input type="file" id="upImages" accept="image/*" multiple onchange="previewImages(event)" />
+              <div class="img-upload-icon">📷</div>
+              <div class="img-upload-text">Click to upload car photos (JPG, PNG)</div>
+            </div>
+            <div class="img-preview-wrap" id="imgPreviewWrap"></div>
+            <div class="limit-warn" id="imgLimitWarn">Max 10 photos per listing. Only the first 10 will be used.</div>
+          </div>
+        </div>
+        <div class="upload-actions">
+          <button class="btn-primary" onclick="addCar()">Add Listing</button>
+          <button class="btn-cancel" onclick="clearUploadForm()">Clear</button>
+          <span class="upload-msg" id="uploadMsg"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MANAGE TABLE -->
+    <div class="manage-panel">
+      <div class="manage-panel-header">
+        <h2 class="manage-panel-title">Current Listings</h2>
+        <span style="font-size:12px;color:var(--muted)" id="listingCount">0 of 8</span>
+      </div>
+      <div id="adminTableWrap">
+        <div class="empty-table">No listings yet. Add your first car above.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CAR DETAIL MODAL -->
+<div class="modal-overlay" id="carModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+
+<script>
+  /* ─── CONFIG ─── */
+  const MAX_PHOTOS = 10;
+  const ADMIN_USER = 'admin';
+  const ADMIN_PASS = 'yard2025';
+
+  /* ─── STATE ─── */
+  let cars = [];
+  try { cars = JSON.parse(localStorage.getItem('osyCars') || '[]'); } catch(e) { cars = []; }
+  let uploadedImageData = []; // filled async by FileReader, ready before addCar runs
+
+  /* ─── PAGE ROUTING ─── */
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  function showPublic() { showPage('publicPage'); renderPublicGrid(); }
+  function showLogin() { showPage('adminLoginPage'); }
+  function showDash()  { showPage('adminDashPage'); renderAdminTable(); renderStats(); }
+
+  /* ─── NAV ─── */
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
+  });
+  document.getElementById('hamburgerBtn').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+  function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  /* ─── SECRET ADMIN: ?admin in URL OR triple-click footer ─── */
+  if (window.location.search.includes('admin')) showLogin();
+  let footerClicks = 0;
+  document.querySelector('footer').addEventListener('click', () => {
+    footerClicks++;
+    if (footerClicks >= 3) { footerClicks = 0; showLogin(); }
+    clearTimeout(window._fct);
+    window._fct = setTimeout(() => { footerClicks = 0; }, 2000);
+  });
+
+  /* ─── AUTH ─── */
+  function doLogin() {
+    const u = document.getElementById('adminUser').value.trim();
+    const p = document.getElementById('adminPass').value;
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      document.getElementById('loginError').classList.add('hidden');
+      showDash();
+    } else {
+      document.getElementById('loginError').classList.remove('hidden');
+      document.getElementById('adminPass').value = '';
+    }
+  }
+  function doLogout() {
+    document.getElementById('adminUser').value = '';
+    document.getElementById('adminPass').value = '';
+    showPublic();
+  }
+
+  /* ─── PERSIST ─── */
+  function saveCars() {
+    try { localStorage.setItem('osyCars', JSON.stringify(cars)); }
+    catch(e) { alert('Storage full — try deleting some listings or using smaller photos.'); }
+  }
+
+  /* ─── IMAGE UPLOAD (async-safe) ─── */
+  function previewImages(e) {
+    const rawFiles = Array.from(e.target.files);
+    const files = rawFiles.slice(0, MAX_PHOTOS);
+    const warn = document.getElementById('imgLimitWarn');
+    warn.style.display = rawFiles.length > MAX_PHOTOS ? 'block' : 'none';
+
+    uploadedImageData = [];
+    const wrap = document.getElementById('imgPreviewWrap');
+    wrap.innerHTML = '';
+
+    if (files.length === 0) return;
+
+    // Read all files with Promise.all so they're ALL loaded before addCar can succeed
+    const promises = files.map((file, idx) => new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        uploadedImageData[idx] = ev.target.result; // preserve order
+        const img = document.createElement('img');
+        img.src = ev.target.result;
+        img.className = 'img-preview';
+        wrap.appendChild(img);
+        resolve();
+      };
+      reader.onerror = () => resolve(); // skip broken file
+      reader.readAsDataURL(file);
+    }));
+
+    Promise.all(promises).then(() => {
+      // Remove any undefined slots (from errors)
+      uploadedImageData = uploadedImageData.filter(Boolean);
+    });
+  }
+
+  /* ─── ADD CAR ─── */
+  function addCar() {
+    const msg = document.getElementById('uploadMsg');
+
+    // Read and clean all values
+    const model    = document.getElementById('upModel').value.trim();
+    const yearRaw  = document.getElementById('upYear').value.trim().replace(/\D/g,'');
+    const priceRaw = document.getElementById('upPrice').value.trim().replace(/[,\s]/g,'');
+    const mileRaw  = document.getElementById('upMileage').value.trim().replace(/[,\s]/g,'');
+    const trans    = document.getElementById('upTrans').value;
+    const fuel     = document.getElementById('upFuel').value;
+    const condition= document.getElementById('upCondition').value.trim();
+
+    // Validate
+    if (!model)           { showMsg(msg,'error','✕ Please enter the Make & Model.'); return; }
+    if (!yearRaw)         { showMsg(msg,'error','✕ Please enter the Year.'); return; }
+    if (!priceRaw)        { showMsg(msg,'error','✕ Please enter the Price.'); return; }
+    if (!mileRaw)         { showMsg(msg,'error','✕ Please enter the Mileage.'); return; }
+    if (uploadedImageData.length < 1) {
+      showMsg(msg,'error','✕ Please select at least 1 photo and wait for the preview to appear.');
+      return;
+    }
+
+    const car = {
+      id:        Date.now(),
+      model,
+      year:      parseInt(yearRaw),
+      price:     parseInt(priceRaw),
+      mileage:   parseInt(mileRaw),
+      trans,
+      fuel,
+      condition: condition || 'Good condition',
+      images:    [...uploadedImageData]
+    };
+
+    cars.push(car);
+    saveCars();
+    clearUploadForm();
+    renderAdminTable();
+    renderStats();
+    renderPublicGrid();
+    showMsg(msg,'success','✓ Car added! It is now live on your website.');
+    setTimeout(() => { msg.textContent = ''; }, 4000);
+  }
+
+  function showMsg(el, type, text) {
+    el.textContent = text;
+    el.className = 'upload-msg ' + type;
+  }
+
+  function clearUploadForm() {
+    ['upModel','upYear','upPrice','upMileage','upCondition'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('upTrans').selectedIndex = 0;
+    document.getElementById('upFuel').selectedIndex  = 0;
+    document.getElementById('imgPreviewWrap').innerHTML = '';
+    document.getElementById('upImages').value = '';
+    document.getElementById('imgLimitWarn').style.display = 'none';
+    uploadedImageData = [];
+  }
+
+  /* ─── DELETE CAR ─── */
+  function deleteCar(id) {
+    if (!confirm('Delete this listing? This cannot be undone.')) return;
+    cars = cars.filter(c => c.id !== id);
+    saveCars();
+    renderAdminTable();
+    renderStats();
+    renderPublicGrid();
+  }
+
+  /* ─── STATS ─── */
+  function renderStats() {
+    const total = cars.length;
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statSlots').textContent = '∞';
+  }
+
+  /* ─── ADMIN TABLE ─── */
+  function renderAdminTable() {
+    const wrap = document.getElementById('adminTableWrap');
+    document.getElementById('listingCount').textContent = `${cars.length} listing${cars.length !== 1 ? 's' : ''}`;
+    // hide old limit warning (unlimited now)
+    document.getElementById('uploadLimitMsg').classList.add('hidden');
+
+    if (cars.length === 0) {
+      wrap.innerHTML = '<div class="empty-table">No listings yet. Add your first car above.</div>';
+      return;
+    }
+
+    wrap.innerHTML = `
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Vehicle</th>
+            <th>Price</th>
+            <th>Mileage</th>
+            <th>Fuel</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${cars.map(c => `
+            <tr>
+              <td>${c.images && c.images[0]
+                ? `<img class="table-thumb" src="${c.images[0]}" alt="${c.model}" />`
+                : `<div class="table-thumb-placeholder">No Photo</div>`}</td>
+              <td class="td-name">${c.year} ${c.model}</td>
+              <td class="td-price">KSh ${c.price.toLocaleString()}</td>
+              <td>${c.mileage.toLocaleString()} km</td>
+              <td>${c.fuel}</td>
+              <td><button class="btn-delete" onclick="deleteCar(${c.id})">Delete</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  /* ─── PUBLIC GRID ─── */
+  function renderPublicGrid() {
+    const grid      = document.getElementById('carGrid');
+    const carSelect = document.getElementById('cCar');
+
+    carSelect.innerHTML = '<option value="">— Select a car —</option>';
+    cars.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value       = `${c.year} ${c.model}`;
+      opt.textContent = `${c.year} ${c.model} — KSh ${c.price.toLocaleString()}`;
+      carSelect.appendChild(opt);
+    });
+
+    if (cars.length === 0) {
+      grid.innerHTML = `<div class="no-cars"><div class="no-cars-icon">🚗</div><p>No listings yet — check back soon.</p></div>`;
+      return;
+    }
+
+    grid.innerHTML = cars.map(c => `
+      <div class="carCard" onclick="openModal(${c.id})">
+        ${c.images && c.images[0]
+          ? `<img class="carCard-img" src="${c.images[0]}" alt="${c.model}" loading="lazy" />`
+          : `<div class="carCard-img-placeholder">No photo available</div>`}
+        <div class="carCard-body">
+          <span class="carCard-badge">${c.fuel} · ${c.trans}</span>
+          <h3 class="carCard-title serif">${c.year} ${c.model}</h3>
+          <p class="carCard-meta">${c.mileage.toLocaleString()} km · ${c.year}</p>
+          <p class="carCard-price">KSh ${c.price.toLocaleString()}</p>
+          <p class="carCard-condition">✓ ${c.condition}</p>
+          <button class="carCard-enquire">View &amp; Enquire</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ─── CAR DETAIL MODAL ─── */
+  function openModal(id) {
+    const c = cars.find(x => x.id === id);
+    if (!c) return;
+
+    // Build photo gallery if multiple images
+    const gallery = (c.images && c.images.length > 0)
+      ? `<div style="overflow-x:auto;display:flex;gap:8px;margin-bottom:20px;padding-bottom:4px">
+          ${c.images.map((src, i) => `
+            <img src="${src}" alt="${c.model} photo ${i+1}"
+              style="height:180px;min-width:240px;object-fit:cover;border:1px solid var(--border);cursor:pointer;flex-shrink:0"
+              onclick="this.parentElement.querySelectorAll('img').forEach(x=>x.style.opacity='.5');this.style.opacity='1';document.getElementById('modalMainImg').src=this.src"
+            />`).join('')}
+         </div>
+         <img id="modalMainImg" src="${c.images[0]}" alt="${c.model}"
+           style="width:100%;height:220px;object-fit:cover;margin-bottom:20px;border:1px solid var(--border)" />`
+      : '';
+
+    document.getElementById('modalContent').innerHTML = `
+      ${gallery}
+      <h2 class="modal-car-title serif">${c.year} ${c.model}</h2>
+      <p class="modal-car-price">KSh ${c.price.toLocaleString()}</p>
+      <div class="modal-info-row"><span>Mileage</span><span>${c.mileage.toLocaleString()} km</span></div>
+      <div class="modal-info-row"><span>Transmission</span><span>${c.trans}</span></div>
+      <div class="modal-info-row"><span>Fuel</span><span>${c.fuel}</span></div>
+      <div class="modal-info-row"><span>Condition</span><span>${c.condition}</span></div>
+      <br>
+      <button class="btn-primary" style="display:block;width:100%;text-align:center"
+        onclick="closeModal();setTimeout(()=>{prefillCar('${c.year} ${c.model}');document.getElementById('contact').scrollIntoView({behavior:'smooth'})},100)">
+        Enquire About This Car
+      </button>
+    `;
+    document.getElementById('carModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('carModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('carModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  function prefillCar(name) {
+    const sel = document.getElementById('cCar');
+    for (let i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === name) { sel.selectedIndex = i; break; }
+    }
+  }
+
+  /* ─── CONTACT FORM ─── */
+  function submitContactForm() {
+    const name  = document.getElementById('cName').value.trim();
+    const phone = document.getElementById('cPhone').value.trim();
+    if (!name || !phone) { alert('Please provide your name and phone number.'); return; }
+    document.getElementById('contactFormContent').classList.add('hidden');
+    document.getElementById('contactSuccess').classList.remove('hidden');
+  }
+
+  /* ─── INIT ─── */
+  renderPublicGrid();
+</script>
+</body>
+</html>
